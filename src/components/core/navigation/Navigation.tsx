@@ -1,8 +1,4 @@
 import {BottomNavigation, BottomNavigationAction, Paper} from "@mui/material";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import GroupIcon from "@mui/icons-material/Group";
-import SettingsIcon from "@mui/icons-material/Settings";
-import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {NavigationRoutes} from "../../../utils/constants/constants.ts";
 
@@ -17,7 +13,7 @@ export const Navigation = () => {
             <BottomNavigation  value={activePath}>
                 {
                     NavigationRoutes.map((route) => {
-                        return <BottomNavigationAction icon={<route.icon/>} onClick={() => navigate(route.path)}/>
+                        return <BottomNavigationAction key={route.path} icon={<route.icon/>} onClick={() => navigate(route.path)}/>
                     })
                 }
             </BottomNavigation>

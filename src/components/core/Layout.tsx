@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Box} from "@mui/material";
 import CssBaseline from '@mui/material/CssBaseline';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {Navigation} from "./navigation/Navigation.tsx";
 import {Loading} from "../common/loading/Loading.tsx";
 
@@ -22,9 +22,11 @@ const Layout = ({ children }) => {
             {loading ?
                 <Loading/>
                 :
-                children
+                <>
+                    {children}
+                    <Navigation/>
+                </>
             }
-            <Navigation/>
         </Box>
     )
 }
