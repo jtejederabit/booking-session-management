@@ -3,16 +3,18 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import AuthMiddleware from '../middleware/AuthMiddleware.tsx';
 import { default as Layout } from '../../components/core/Layout.tsx';
 import Login from '../../pages/Login.tsx';
+import SessionsPage from "../../pages/SessionsPage.tsx";
+import CustomersPage from "../../pages/CustomersPage.tsx";
 
 const routes = [
     {
         path: '/',
-        component: Layout,
+        component: SessionsPage,
         protected: true
     },
     {
         path: '/customers',
-        component: Layout,
+        component: CustomersPage,
         protected: true
     },
     {
