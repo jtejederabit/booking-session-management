@@ -1,8 +1,11 @@
 import {DateCalendar} from "@mui/x-date-pickers";
 
-export const Calendar = () => {
+export const Calendar = ({
+    handleDate
+ }) => {
     return (
         <DateCalendar
+            onChange={(date) => handleDate(date)}
             sx={{
                 width: '100%',
                 "& > div > div": {
