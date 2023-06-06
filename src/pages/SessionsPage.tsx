@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 const SessionsPage = () => {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState([])
+    const defaultDate = dayjs()
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -24,9 +25,13 @@ const SessionsPage = () => {
         setData([...sessionData].filter((session) => session.day === dayjs(date).format('YYYY/MM/DD')))
     }
 
+    useEffect(() => {
+        setData([...sessionData].filter((session) => session.day === dayjs(defaultDate).format('YYYY/MM/DD')))
+    }, [])
+
     return (
         <>
-            <Calendar handleDate={handleDate}/>
+            <Calendar handleDate={handleDate} />
             <NewActivity isOpen={open} handleClose={handleClose}/>
             <Box
                 sx={{ margin: '10px' }}

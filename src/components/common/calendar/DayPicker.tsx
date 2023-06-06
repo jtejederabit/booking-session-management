@@ -1,11 +1,19 @@
+import { useState} from "react";
 import {DateCalendar} from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from 'dayjs'
 
 export const Calendar = ({
-    handleDate
+    handleDate,
  }) => {
+    const [date, setDate] = useState<Dayjs | null>(dayjs());
+    const onDateChange = (newDate) => {
+        setDate(newDate);
+        handleDate(newDate)
+    }
     return (
         <DateCalendar
-            onChange={(date) => handleDate(date)}
+            value={date}
+            onChange={(newValue) => onDateChange(newValue)}
             sx={{
                 width: '100%',
                 "& > div > div": {

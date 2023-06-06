@@ -282,5 +282,54 @@ export const sessionData = [
         "totalSlots": 8,
         "busySlots": 0,
         "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "647d8218b1974b633abeb3fd2"
+        },
+        "review": [
+            0,
+            0,
+            0,
+            0,
+            1
+        ],
+        "users": [
+            "v8lkXK2ALxep7yXWd6VMtda3fOt1",
+            "MaKnL8ngCEYI96ekQncB8ZRzTbZ2",
+            "unK0HateydNU3xYSR18Amj8FSfk1",
+            "fgPU0t8ePbParSSOFAN1OIzmgl12"
+        ],
+        "inc": [
+            "v8lkXK2ALxep7yXWd6VMtda3fOt1",
+            "MaKnL8ngCEYI96ekQncB8ZRzTbZ2",
+            "unK0HateydNU3xYSR18Amj8FSfk1",
+            "fgPU0t8ePbParSSOFAN1OIzmgl12"
+        ],
+        "confirmed": [
+            "v8lkXK2ALxep7yXWd6VMtda3fOt1",
+            "MaKnL8ngCEYI96ekQncB8ZRzTbZ2",
+            "unK0HateydNU3xYSR18Amj8FSfk1",
+            "fgPU0t8ePbParSSOFAN1OIzmgl12"
+        ],
+        "notConfirmed": [],
+        "sub_notifications": [],
+        "day": "2023/06/06",
+        "startTime": {
+            "HH": "13",
+            "mm": "15"
+        },
+        "endTime": {
+            "HH": "14",
+            "mm": "15"
+        },
+        "startFullTime": "2023/06/05 13:15",
+        "time": "13:15 - 14:15 ",
+        "description": "Metabolic ",
+        "fullDescription": null,
+        "intensity": null,
+        "totalSlots": 8,
+        "busySlots": 0,
+        "__v": 0
     }
 ]
