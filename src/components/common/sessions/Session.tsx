@@ -11,7 +11,16 @@ import {
 } from "@mui/material";
 import {AccessTime, FitnessCenter} from "@mui/icons-material";
 
-export const Session = () => {
+export const Session = ({
+    session
+}) => {
+    const getRating = () => {
+        const individualScore = session.review.map((r,indexR) => r*(indexR+1))
+        const totalValue = session.review.reduce((a,b) => a+b)
+        let totalScore = individualScore.reduce((a,b) => a+b)
+        return totalScore/totalValue
+    }
+
     return (
         <>
             <ListItem alignItems="flex-start">
@@ -28,23 +37,22 @@ export const Session = () => {
                                 variant="body2"
                                 color="text.primary"
                             >
-                                Metabólico
+                                {session.description}
                             </Typography>
                         </>
                     }
                 />
                 <ListItemSecondaryAction sx={{ display: 'flex' }}>
-                    <Chip color="success" icon={<FitnessCenter fontSize="small"/>} label="6/8" />
+                    <Chip color="success" icon={<FitnessCenter fontSize="small"/>} label={`${session.users.length}/${session.totalSlots}`} />
                 </ListItemSecondaryAction>
             </ListItem>
             <Divider/>
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'space-around',
-                // marginBottom: 0.6,
                 backgroundColor: '#fafafa'
             }}>
-                <Rating name="size-small" defaultValue={2} size="small" readOnly/>
+                <Rating name="size-small" value={getRating()} size="small" readOnly/>
             </Box>
         </>
     )
