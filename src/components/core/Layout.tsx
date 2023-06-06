@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
     }, [location]);
 
     return (
-        <Box sx={{ height: '100vh' }}>
+        <Box>
             <CssBaseline/>
             {loading ?
                 <Loading/>
