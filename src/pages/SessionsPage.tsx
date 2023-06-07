@@ -9,16 +9,16 @@ import dayjs from 'dayjs';
 import { AppContext } from '../utils/context/AppContext.tsx';
 
 const SessionsPage = () => {
-    const { sessionData, setSessionData } = useContext(AppContext);
+    const { sessionData, setSessionData, openNewtModal, setOpenNewModal } = useContext(AppContext);
     const [open, setOpen] = useState(false);
     const defaultDate = dayjs()
 
     const handleClickOpen = () => {
-        setOpen(true);
+        setOpenNewModal(true);
     };
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenNewModal(false);
     };
 
     const handleDate = (date) => {
@@ -32,7 +32,7 @@ const SessionsPage = () => {
     return (
         <>
             <Calendar handleDate={handleDate} />
-            <NewSession isOpen={open} handleClose={handleClose}/>
+            { openNewtModal && <NewSession isOpen={openNewtModal} handleClose={handleClose}/>}
             <Box
                 sx={{ margin: '10px' }}
             >
