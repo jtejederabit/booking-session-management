@@ -1,16 +1,16 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import {Calendar} from "../components/common/calendar/DayPicker.tsx";
-import {Box, ButtonGroup, Button, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions} from "@mui/material";
+import {Box, Divider} from "@mui/material";
 import {SessionWrapper} from "../components/common/sessions/SessionWrapper.tsx";
-import {ContentCopy, Add} from "@mui/icons-material";
 import ActionButtons from "../components/common/actions/ActionButtons.tsx";
-import NewActivity from "../components/common/dialogs/newActivity/NewActivity.tsx";
-import { sessionData } from '../utils/mock/session.mock.data.js'
+import NewSession from "../components/common/dialogs/newSession/NewSession.tsx";
+import { sessionData as data} from '../utils/mock/session.mock.data.js'
 import dayjs from 'dayjs';
+import { AppContext } from '../utils/context/AppContext.tsx';
 
 const SessionsPage = () => {
+    const { sessionData, setSessionData } = useContext(AppContext);
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState([])
     const defaultDate = dayjs()
 
     const handleClickOpen = () => {
@@ -22,23 +22,23 @@ const SessionsPage = () => {
     };
 
     const handleDate = (date) => {
-        setData([...sessionData].filter((session) => session.day === dayjs(date).format('YYYY/MM/DD')))
+        setSessionData([...data].filter((session) => session.day === dayjs(date).format('YYYY/MM/DD')))
     }
 
     useEffect(() => {
-        setData([...sessionData].filter((session) => session.day === dayjs(defaultDate).format('YYYY/MM/DD')))
+        setSessionData([...data].filter((session) => session.day === dayjs(defaultDate).format('YYYY/MM/DD')))
     }, [])
 
     return (
         <>
             <Calendar handleDate={handleDate} />
-            <NewActivity isOpen={open} handleClose={handleClose}/>
+            <NewSession isOpen={open} handleClose={handleClose}/>
             <Box
                 sx={{ margin: '10px' }}
             >
                 <ActionButtons handleNew={handleClickOpen}/>
                 <Divider sx={{ marginTop: '8px'}}/>
-                <SessionWrapper sessionData={data}/>
+                <SessionWrapper sessionData={sessionData}/>
             </Box>
         </>
     );

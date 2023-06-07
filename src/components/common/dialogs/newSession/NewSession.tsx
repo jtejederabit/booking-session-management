@@ -1,22 +1,21 @@
-import {useEffect, useState, useRef} from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Box, ButtonGroup} from "@mui/material";
+import {useEffect, useState} from 'react';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, ButtonGroup} from "@mui/material";
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
 
-const NewActivity = ({
+const NewSession = ({
     isOpen,
     handleClose
  }) => {
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [title, setTitle] = useState<string>(null);
-    const [slots, setSlots] = useState<number>(null);
+    const [sessionData, setSessionData] = useState({title: "",slots: "",startDate: "", endDate: ""});
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setSessionData((prevSessionData) => ({ ...prevSessionData, [name]: value }));
+    };
 
     const resetData = () => {
-        setStartDate(null)
-        setEndDate(null)
-        setTitle(null)
-        setSlots(null)
+        setSessionData({title: "",slots: "",startDate: "", endDate: ""})
     }
 
     const closeDialog = () => {
@@ -24,20 +23,22 @@ const NewActivity = ({
         handleClose()
     }
     const saveSession = () => {
-        console.log("date ", dayjs(startDate).format('YYYY/MM/DD'))
-        console.log("startDate ", dayjs(startDate).format('HH:mm'))
-        console.log("endDate ", dayjs(endDate).format('HH:mm'))
-        console.log("title ", title)
-        console.log("slots ", slots)
+        console.log("sessionData ", sessionData)
         // handleClose()
     }
 
     useEffect(() => {
-        if(startDate) {
-            const newEndDate = dayjs(startDate).add(1,'hour')
-            setEndDate(newEndDate)
+        if(sessionData.startDate) {
+            const newEndDate = dayjs(sessionData.startDate).add(1,'hour')
+            const event = {
+                target: {
+                    name: 'endDate',
+                    value: newEndDate
+                }
+            }
+            handleChange(event)
         }
-    }, [startDate]);
+    }, [sessionData.startDate]);
 
     return (
         <Dialog open={isOpen} onClose={handleClose}>
@@ -46,29 +47,44 @@ const NewActivity = ({
                 <TimePicker
                     label="Hora Inicio"
                     disablePast={true}
+                    name="startDate"
                     format="HH:mm"
                     sx={{ width: '100%', marginBottom: '10px'}}
                     onChange={(newDate) => {
-                        setStartDate(newDate);
+                        const event = {
+                            target: {
+                                name: 'startDate',
+                                value: newDate
+                            }
+                        }
+                        handleChange(event)
                     }}
                 />
                 <TimePicker
                     label="Hora Fin"
-                    minTime={startDate}
-                    value={endDate}
+                    minTime={sessionData.startDate}
+                    value={sessionData.endDate}
+                    name="endDate"
                     format="HH:mm"
                     sx={{ width: '100%'}}
                     onChange={(newDate) => {
-                        setEndDate(newDate);
+                        const event = {
+                            target: {
+                                name: 'endDate',
+                                value: newDate
+                            }
+                        }
+                        handleChange(event)
                     }}
                 />
                 <TextField
                     autoFocus
                     margin="dense"
                     id="title"
-                    value={title}
+                    value={sessionData.title}
                     label="Título"
-                    onChange={(e) => setTitle(e.target.value)}
+                    name="title"
+                    onChange={handleChange}
                     type="text"
                     fullWidth
                     variant="standard"
@@ -77,9 +93,10 @@ const NewActivity = ({
                     autoFocus
                     margin="dense"
                     id="slots"
-                    calue={slots}
+                    value={sessionData.slots}
+                    name="slots"
                     label="Cupo"
-                    onChange={(e) => setSlots(e.target.value as number)}
+                    onChange={handleChange}
                     type="number"
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                     fullWidth
@@ -96,4 +113,4 @@ const NewActivity = ({
     );
 };
 
-export default NewActivity;
+export default NewSession;
