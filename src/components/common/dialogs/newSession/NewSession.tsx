@@ -1,13 +1,16 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, ButtonGroup} from "@mui/material";
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
+import { AppContext } from "../../../../utils/context/AppContext.tsx";
 
 const NewSession = ({
     isOpen,
     handleClose
  }) => {
-    const [sessionData, setSessionData] = useState({title: "",slots: "",startDate: "", endDate: ""});
+    const { sessionEdit, setSessionEdit } = useContext(AppContext)
+    const [sessionData, setSessionData] = useState({description: "",totalSlots: "",startDate: "", endDate: ""});
+    const [isEdit, setIsEdit] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -15,7 +18,11 @@ const NewSession = ({
     };
 
     const resetData = () => {
-        setSessionData({title: "",slots: "",startDate: "", endDate: ""})
+        setSessionData({description: "",totalSlots: "",startDate: "", endDate: ""})
+        if(isEdit) {
+            setSessionEdit(null)
+            setIsEdit(false)
+        }
     }
 
     const closeDialog = () => {
@@ -28,7 +35,7 @@ const NewSession = ({
     }
 
     useEffect(() => {
-        if(sessionData.startDate) {
+        if(sessionData.startDate && !sessionData.endDate) {
             const newEndDate = dayjs(sessionData.startDate).add(1,'hour')
             const event = {
                 target: {
@@ -38,11 +45,18 @@ const NewSession = ({
             }
             handleChange(event)
         }
-    }, [sessionData.startDate]);
+    }, [sessionData?.startDate]);
+
+    useEffect(() => {
+        if(sessionEdit) {
+            setSessionData(sessionEdit)
+            setIsEdit(true)
+        }
+    }, [sessionEdit]);
 
     return (
         <Dialog open={isOpen} onClose={handleClose}>
-            <DialogTitle>Añadir nueva actividad</DialogTitle>
+            <DialogTitle>{isEdit ? 'Editar' : 'Nueva'} actividad</DialogTitle>
             <DialogContent sx={{ paddingTop: '10px !important'}}>
                 <TimePicker
                     label="Hora Inicio"
@@ -81,9 +95,9 @@ const NewSession = ({
                     autoFocus
                     margin="dense"
                     id="title"
-                    value={sessionData.title}
+                    value={sessionData.description}
                     label="Título"
-                    name="title"
+                    name="description"
                     onChange={handleChange}
                     type="text"
                     fullWidth
@@ -93,8 +107,8 @@ const NewSession = ({
                     autoFocus
                     margin="dense"
                     id="slots"
-                    value={sessionData.slots}
-                    name="slots"
+                    value={sessionData.totalSlots}
+                    name="totalSlots"
                     label="Cupo"
                     onChange={handleChange}
                     type="number"

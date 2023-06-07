@@ -7,22 +7,27 @@ export const SessionWrapper = ({
     sessionData
 }) => {
     const [open, setOpen] = useState(false);
+    const [selectedSession, setSelectedSession] = useState(null)
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (session) => {
+        setSelectedSession(session)
         setOpen(true);
     };
 
     const handleClose = () => {
+        setSelectedSession(null)
         setOpen(false);
     };
 
     return (
         <List sx={{width: '100%', bgcolor: 'background.paper', marginBottom: '58px'}}>
-            <SessionInfo isOpen={open} handleClose={handleClose} sessionInfo={sessionData}/>
+            {
+                open && <SessionInfo isOpen={open} handleClose={handleClose} sessionInfo={selectedSession}/>
+            }
             {
                 sessionData.map((session) => {
                     return (
-                        <Card key={session._id} variant="outlined" sx={{ mb: '10px'}} onClick={handleClickOpen}>
+                        <Card key={session._id} variant="outlined" sx={{ mb: '10px'}} onClick={() => handleClickOpen(session)}>
                             <Session session={session}/>
                         </Card>
                     )
