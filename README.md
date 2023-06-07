@@ -1,6 +1,26 @@
-# Getting Started with Create React App
+# About this APP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
+This repo is a test, work in progress, migration from old Vue.js mobile application to React.\
+At the end of the development, with this app you will:\
+
+- Have two different roles: admin and user.
+
+Admin role:
+- Will be able to create/update/delete sessions based on a calendar.
+- Confirm users in each session.
+- See all registered users (available actions: remove)
+- Add bonus info to each user, so they can join sessions.
+- Add default settings to sessions.
+
+User role:
+- Register to the app.
+- Modify the profile.
+- View sessions based on an in-line calendar
+- Join sessions
+- Subscribe to sessions
+
+
 
 ## Available Scripts
 
