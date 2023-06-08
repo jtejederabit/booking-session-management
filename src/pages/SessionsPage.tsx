@@ -1,10 +1,9 @@
 import {useEffect, useState, useContext} from "react";
 import {Calendar} from "../components/common/calendar/DayPicker.tsx";
-import {Box, Divider, Alert, Button} from "@mui/material";
+import {Box, Divider} from "@mui/material";
 import {SessionWrapper} from "../components/common/sessions/SessionWrapper.tsx";
 import ActionButtons from "../components/common/actions/ActionButtons.tsx";
 import NewSession from "../components/common/dialogs/newSession/NewSession.tsx";
-import { Cached } from "@mui/icons-material";
 import dayjs from 'dayjs';
 import { AppContext } from '../utils/context/AppContext.tsx';
 

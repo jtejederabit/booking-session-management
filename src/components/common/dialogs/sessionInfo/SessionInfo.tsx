@@ -9,17 +9,14 @@ import {
     Grid,
     Fab,
     List,
-    ListItem,
-    ListItemAvatar,
-    Avatar,
-    ListItemText,
     Divider,
     Chip
 } from "@mui/material";
-import { EditCalendar, EventBusy, Cached, CheckCircle, RemoveCircle } from "@mui/icons-material";
+import { EditCalendar, EventBusy, Cached, RemoveCircle } from "@mui/icons-material";
 import { AppContext } from '../../../../utils/context/AppContext.tsx';
 import {useContext, useState} from "react";
 import {usersData as data} from '../../../../utils/mock/users.mock.data.js'
+import UserList from "../../lists/UserList";
 
 const SessionInfo = ({
     isOpen,
@@ -97,29 +94,7 @@ const SessionInfo = ({
                         users.map((user, index) => {
                             return (
                                 <>
-                                    <ListItem key={user.id} alignItems="flex-start">
-                                        <ListItemAvatar sx={{ marginTop: 0}}>
-                                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            sx={{ alignSelf: 'center'}}
-                                            secondary={ !confirmed && userActions(user)}
-                                        >
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={6}>
-                                                    {user.first_name}
-                                                </Grid>
-                                                {
-                                                    confirmed &&
-                                                    (
-                                                        <Grid item xs={6} sx={{ display: 'flex', alignSelf: 'center', justifyContent: 'end'}}>
-                                                            <CheckCircle color="success"/>
-                                                        </Grid>
-                                                    )
-                                                }
-                                            </Grid>
-                                        </ListItemText>
-                                    </ListItem>
+                                    <UserList user={user} isConfirmed={confirmed} userActions={userActions}/>
                                     {
                                         index < data.length -1 && <Divider key={`divider-${user.id}`} variant="inset" component="li" />
                                     }
