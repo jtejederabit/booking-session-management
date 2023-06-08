@@ -26,8 +26,9 @@ const SessionInfo = ({
     sessionInfo,
     handleClose
  }) =>{
-    const { setOpenNewModal, setSessionEdit } = useContext(AppContext);
+    const { setOpenNewModal, setSessionEdit, setMoveUser } = useContext(AppContext);
     const [confirmed, setConfirmed] = useState(false);
+    const [users, setUsers] = useState(data)
 
     const handleClickOpen = () => {
         setSessionEdit(sessionInfo)
@@ -35,13 +36,30 @@ const SessionInfo = ({
     };
 
     const userActions = (user) => {
+        const removeUser = () => {
+            const userIndex = users.findIndex((u) => u.id === user.id)
+            if (userIndex !== -1) {
+                const updatedUsers = [...users];
+                updatedUsers.splice(userIndex, 1);
+                setUsers(updatedUsers);
+            }
+        }
+
+        const moveUser = () => {
+            setMoveUser({
+                user: user,
+                session: sessionInfo
+            })
+            handleClose()
+        }
+
         return (
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Chip size="small" sx={{marginRight: '5px'}} icon={<Cached />} label="Mover" onClick={() => {}}/>
+                    <Chip size="small" sx={{marginRight: '5px'}} icon={<Cached />} label="Mover" onClick={moveUser}/>
                 </Grid>
                 <Grid item xs={6} sx={{ display: 'flex', alignSelf: 'center', justifyContent: 'end'}}>
-                    <Chip size="small" icon={<RemoveCircle />} label="Quitar" onClick={() => {}}/>
+                    <Chip size="small" icon={<RemoveCircle />} label="Quitar" onClick={removeUser}/>
                 </Grid>
             </Grid>
         )
@@ -76,7 +94,7 @@ const SessionInfo = ({
             <DialogContent sx={{ paddingLeft: 0, paddingRight: 0, paddingTop: '10px !important'}}>
                 <List sx={{ width: '100%' }}>
                     {
-                        data.map((user, index) => {
+                        users.map((user, index) => {
                             return (
                                 <>
                                     <ListItem key={user.id} alignItems="flex-start">
