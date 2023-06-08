@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { EditCalendar, EventBusy, Cached, CheckCircle, RemoveCircle } from "@mui/icons-material";
 import { AppContext } from '../../../../utils/context/AppContext.tsx';
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {usersData as data} from '../../../../utils/mock/users.mock.data.js'
 
 const SessionInfo = ({
@@ -27,24 +27,28 @@ const SessionInfo = ({
     handleClose
  }) =>{
     const { setOpenNewModal, setSessionEdit } = useContext(AppContext);
+    const [confirmed, setConfirmed] = useState(false);
 
     const handleClickOpen = () => {
         setSessionEdit(sessionInfo)
         setOpenNewModal(true);
     };
 
-    const UserActions = (user) => {
+    const userActions = (user) => {
         return (
             <Grid container spacing={2}>
-                <Grid item xs={8}>
-                    <Chip size="small" sx={{marginRight: '5px'}} icon={<Cached />} label="Mover" />
-                    <Chip size="small" icon={<CheckCircle />} label="Confirmar" />
+                <Grid item xs={6}>
+                    <Chip size="small" sx={{marginRight: '5px'}} icon={<Cached />} label="Mover" onClick={() => {}}/>
                 </Grid>
-                <Grid item xs={4} sx={{ display: 'flex', alignSelf: 'center', justifyContent: 'end'}}>
-                    <Chip size="small" icon={<RemoveCircle />} label="Quitar"/>
+                <Grid item xs={6} sx={{ display: 'flex', alignSelf: 'center', justifyContent: 'end'}}>
+                    <Chip size="small" icon={<RemoveCircle />} label="Quitar" onClick={() => {}}/>
                 </Grid>
             </Grid>
         )
+    }
+
+    const confirmUsers = () => {
+        setConfirmed(true)
     }
 
     return (
@@ -56,14 +60,19 @@ const SessionInfo = ({
                         <br/>
                         <Typography variant="h6" sx={{ color: 'grey' , fontSize: 16}}>{sessionInfo.startFullTime}</Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ display: 'flex', alignSelf: 'center', justifyContent: 'end'}}>
-                        <Fab color="primary" size="small" sx={{ boxShadow: 'none', marginRight: '5px'}} onClick={handleClickOpen}><EditCalendar /></Fab>
-                        <Fab color="primary" size="small" sx={{ boxShadow: 'none'}}><EventBusy /></Fab>
-                    </Grid>
+                    {
+                        !confirmed &&
+                        (
+                            <Grid item xs={6} sx={{ display: 'flex', alignSelf: 'center', justifyContent: 'end'}}>
+                                <Fab color="primary" size="small" sx={{ boxShadow: 'none', marginRight: '5px'}} onClick={handleClickOpen}><EditCalendar /></Fab>
+                                <Fab color="primary" size="small" sx={{ boxShadow: 'none'}}><EventBusy /></Fab>
+                            </Grid>
+                        )
+                    }
                 </Grid>
 
             </DialogTitle>
-            <Button variant="contained" color="success" fullWidth sx={{ borderRadius: 0 }}>Confirmar todos</Button>
+            <Button variant="contained" color="success" fullWidth sx={{ borderRadius: 0 }} onClick={confirmUsers} disabled={confirmed}>{confirmed ? 'Sesión confirmada' : 'Confirmar sesión'}</Button>
             <DialogContent sx={{ paddingLeft: 0, paddingRight: 0, paddingTop: '10px !important'}}>
                 <List sx={{ width: '100%' }}>
                     {
@@ -76,9 +85,22 @@ const SessionInfo = ({
                                         </ListItemAvatar>
                                         <ListItemText
                                             sx={{ alignSelf: 'center'}}
-                                            primary={user.first_name}
-                                            secondary={<UserActions/>}
-                                        />
+                                            secondary={ !confirmed && userActions(user)}
+                                        >
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={6}>
+                                                    {user.first_name}
+                                                </Grid>
+                                                {
+                                                    confirmed &&
+                                                    (
+                                                        <Grid item xs={6} sx={{ display: 'flex', alignSelf: 'center', justifyContent: 'end'}}>
+                                                            <CheckCircle color="success"/>
+                                                        </Grid>
+                                                    )
+                                                }
+                                            </Grid>
+                                        </ListItemText>
                                     </ListItem>
                                     {
                                         index < data.length -1 && <Divider key={`divider-${user.id}`} variant="inset" component="li" />
