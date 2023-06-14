@@ -42,7 +42,6 @@ export default function LogIn() {
         });
         setLoggedIn(true)
         navigate('/')
-
     };
 
     return (
