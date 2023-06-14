@@ -1,6 +1,8 @@
 import React, { createContext, useState } from 'react';
 import { sessionData as sessions} from '../mock/session.mock.data'
 import { usersData as users} from '../mock/users.mock.data.js'
+import { Notifications } from "../constants/constants";
+
 export const AppContext = createContext<any>(null);
 
 
@@ -11,6 +13,7 @@ export const AppProvider: React.FC = ({ children }) => {
     const [openNewtModal, setOpenNewModal] = useState(false)
     const [sessionEdit, setSessionEdit] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
+    const [notifications, setNotifications] = useState(Notifications)
 
     return (
         <AppContext.Provider
@@ -21,6 +24,8 @@ export const AppProvider: React.FC = ({ children }) => {
                 allUsers,
                 moveUser,
                 loggedIn,
+                notifications,
+                setNotifications,
                 setLoggedIn,
                 setMoveUser,
                 setAllUsers,

@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState, useContext } from "react";
-import { Navigate, useLocation, } from 'react-router-dom';
+import {Navigate, useLocation, useNavigate,} from 'react-router-dom';
 import { Loading } from "../../components/common/loading/Loading";
 import { AppContext } from "../context/AppContext";
 
 export const PrivateRoute = ({ element: Element, protected: isProtected, ...rest }) => {
+    const navigate = useNavigate()
     const { loggedIn } = useContext(AppContext)
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const previousPath = useRef('');
+
+    useEffect(() => {
+        !loggedIn && navigate('/login')
+    }, [loggedIn]);
 
     useEffect(() => {
 
