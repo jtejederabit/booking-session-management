@@ -1,10 +1,10 @@
-import React, { useState, useEffect} from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import AuthMiddleware from '../middleware/AuthMiddleware.tsx';
-import { default as Layout } from '../../components/core/Layout.tsx';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Login from '../../pages/Login.tsx';
 import SessionsPage from "../../pages/SessionsPage.tsx";
 import CustomersPage from "../../pages/CustomersPage.tsx";
+import {PrivateRoute} from "../middleware/PrivateRoutes";
+import SettingsPage from "../../pages/SettingsPage";
 
 const routes = [
     {
@@ -19,7 +19,7 @@ const routes = [
     },
     {
         path: '/settings',
-        component: Layout,
+        component: SettingsPage,
         protected: true
     },
     {
@@ -39,9 +39,10 @@ const RoutesProvider = () => {
                     exact
                     path={route.path}
                     element={
-                        <AuthMiddleware>
-                            <route.component />
-                        </AuthMiddleware>
+                        <PrivateRoute
+                            element={route.component}
+                            protected={route.protected}
+                        />
                     }
                 />
             ))}
