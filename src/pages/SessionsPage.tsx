@@ -8,8 +8,9 @@ import dayjs from 'dayjs';
 import { AppContext } from '../utils/context/AppContext.tsx';
 
 const SessionsPage = () => {
-    const { sessionData, openNewtModal, setOpenNewModal, moveUser } = useContext(AppContext);
+    const { sessionData, openNewtModal, setOpenNewModal, moveUser, copy, setCopy } = useContext(AppContext);
     const [daySessions, setDaySessions] = useState([])
+    const [date, setDate] = useState(null)
     const defaultDate = dayjs()
 
 
@@ -23,6 +24,14 @@ const SessionsPage = () => {
 
     const handleDate = (date) => {
         setDaySessions([...sessionData].filter((session) => session.day === dayjs(date).format('YYYY/MM/DD')))
+        setDate(date)
+    }
+
+    const handleCopyTo = () => {
+        // TODO: add logic to copy the session data from day to selected day
+        // copy from --> copy
+        // copy to --> date
+        setCopy(null)
     }
 
     useEffect(() => {
@@ -36,9 +45,9 @@ const SessionsPage = () => {
             <Box
                 sx={{ margin: '10px' }}
             >
-                { !moveUser && <ActionButtons handleNew={handleClickOpen}/>}
+                { !moveUser && <ActionButtons handleNew={handleClickOpen} copyFrom={daySessions}/>}
                 <Divider sx={{ marginTop: '8px'}}/>
-                <SessionWrapper sessionData={daySessions}/>
+                <SessionWrapper sessionData={daySessions} handleCopy={handleCopyTo} isOlder={dayjs().isAfter(dayjs(date).add(1,'day'))}/>
             </Box>
         </>
     );
