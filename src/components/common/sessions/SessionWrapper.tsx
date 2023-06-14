@@ -6,22 +6,26 @@ import { AppContext } from '../../../utils/context/AppContext.tsx';
 import {Cached} from "@mui/icons-material";
 
 export const SessionWrapper = ({
-    sessionData
+    sessionData,
+    handleCopy,
+    isOlder
 }) => {
-    const { moveUser, setMoveUser } = useContext(AppContext);
+    const { moveUser, setMoveUser, copy, setCopy } = useContext(AppContext);
     const [open, setOpen] = useState(false);
     const [selectedSession, setSelectedSession] = useState(null)
 
     const handleClickOpen = (session) => {
         if(moveUser) {
-            // Add logic to move the user to the selected session and remove from the previous one
-            // Open the previous session once changes are commited
             resetUserMovement()
         } else {
             setSelectedSession(session)
             setOpen(true);
         }
     };
+
+    const copyToDay = () => {
+        console.log("copy")
+    }
 
     const handleClose = () => {
         setSelectedSession(null)
@@ -32,6 +36,10 @@ export const SessionWrapper = ({
         setSelectedSession(moveUser.session)
         setOpen(true);
         setMoveUser(null);
+    }
+
+    const resetCopy = () => {
+        setCopy(null)
     }
 
     return (
@@ -58,6 +66,31 @@ export const SessionWrapper = ({
                             -- o --
                             <br/>
                             <Button variant="text" size="small" color="error" fullWidth onClick={resetUserMovement}>Cancelar movimiento</Button>
+                        </Alert>
+
+                    </>
+                )
+            }
+            {
+                copy &&
+                (
+                    <>
+                        <Alert
+                            severity="info"
+                            sx={{
+                                '& .MuiAlert-icon' : {
+                                    alignSelf: 'center',
+                                    display: 'none'
+                                },
+                                '& .MuiAlert-message' : {
+                                    textAlign: 'center',
+                                    width: '100%'
+                                }
+                            }}
+                        >
+
+                            <Button size="small" variant="contained" color="success" sx={{ marginBottom: '5px'}} disabled={isOlder} onClick={() => handleCopy()}>Copiar sesiones al día seleccionado</Button>
+                            <Button variant="text" size="small" color="error" fullWidth onClick={resetCopy}>Cancelar la copia</Button>
                         </Alert>
 
                     </>

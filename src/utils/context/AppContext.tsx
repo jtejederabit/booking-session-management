@@ -14,6 +14,7 @@ export const AppProvider: React.FC = ({ children }) => {
     const [sessionEdit, setSessionEdit] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
     const [notifications, setNotifications] = useState(Notifications)
+    const [copy, setCopy] = useState(null)
 
     return (
         <AppContext.Provider
@@ -25,6 +26,8 @@ export const AppProvider: React.FC = ({ children }) => {
                 moveUser,
                 loggedIn,
                 notifications,
+                copy,
+                setCopy,
                 setNotifications,
                 setLoggedIn,
                 setMoveUser,
