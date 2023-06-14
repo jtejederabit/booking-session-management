@@ -22,6 +22,7 @@ User role:
 
 ![image](https://github.com/jtejederabit/booking-session-management/assets/130762129/6efe4581-8e12-4623-b329-9ce7f04a386f)
 ![img.png](img.png)
+![img_1.png](img_1.png)
 
 ## Available Scripts
 
