@@ -10,6 +10,7 @@ export const AppProvider: React.FC = ({ children }) => {
     const [moveUser, setMoveUser] = useState(null)
     const [openNewtModal, setOpenNewModal] = useState(false)
     const [sessionEdit, setSessionEdit] = useState(null)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     return (
         <AppContext.Provider
@@ -19,6 +20,8 @@ export const AppProvider: React.FC = ({ children }) => {
                 sessionEdit,
                 allUsers,
                 moveUser,
+                loggedIn,
+                setLoggedIn,
                 setMoveUser,
                 setAllUsers,
                 setSessionData,

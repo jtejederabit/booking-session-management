@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, useLocation} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import RoutesProvider from './utils/routes/Routes.tsx';
 import Layout from "./components/core/Layout.tsx";
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -10,11 +10,11 @@ function App() {
   return (
       <AppProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-              <Router>
+              <BrowserRouter>
                   <Layout>
                     <RoutesProvider />
                   </Layout>
-              </Router>
+              </BrowserRouter>
           </LocalizationProvider>
       </AppProvider>
   );
