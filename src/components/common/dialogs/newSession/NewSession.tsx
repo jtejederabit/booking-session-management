@@ -49,7 +49,11 @@ const NewSession = ({
 
     useEffect(() => {
         if(sessionEdit) {
-            setSessionData(sessionEdit)
+            setSessionData({
+                ...sessionEdit,
+                startDate: dayjs().set('hour', sessionEdit.startTime.HH).set('minute', sessionEdit.startTime.mm),
+                endDate: dayjs().set('hour', sessionEdit.endTime.HH).set('minute', sessionEdit.endTime.mm)
+            })
             setIsEdit(true)
         }
     }, [sessionEdit]);
@@ -60,6 +64,7 @@ const NewSession = ({
             <DialogContent sx={{ paddingTop: '10px !important'}}>
                 <TimePicker
                     label="Hora Inicio"
+                    value={sessionData.startDate}
                     disablePast={true}
                     name="startDate"
                     format="HH:mm"
